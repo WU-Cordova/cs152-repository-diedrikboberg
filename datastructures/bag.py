@@ -8,17 +8,31 @@ class Bag(IBag[T]):
         self.bag_dict = {}
 
     def add(self, item: T) -> None:
-        if item in self.bag_list:
-                self.bag_dict[item] += 1
+        if item is not None:
+            if item in self.bag_list:
+                    self.bag_dict[item] += 1
+            else:
+                self.bag_list.append(item)
+                self.bag_dict[item] = 1
         else:
-            self.bag_list.append(item)
-            self.bag_dict[item] = 1
+            raise TypeError("Wrong Value")
 
     def remove(self, item: T) -> None:
-        raise NotImplementedError("remove method not implemented")
+        if item in self.bag_list and item in self.bag_dict:
+            if self.bag_dict[item] > 1:
+                self.bag_dict[item] -= 1
+            
+            elif self.bag_dict[item] == 1:
+                self.bag_dict.pop(item)
+                self.bag_list.pop(item)
+        else:
+            raise ValueError(item, "is not in the list.")
 
     def count(self, item: T) -> int:
-        raise NotImplementedError("count method not implemented")
+        if item in self.bag_list:
+            return self.bag_dict[item]
+        else:
+            return 0
 
     def __len__(self) -> int:
         raise NotImplementedError("__len__ method not implemented")

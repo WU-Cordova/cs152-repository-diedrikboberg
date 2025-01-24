@@ -41,8 +41,9 @@ def test_count_returns_correct_number_of_occurrences(bag: Bag[int]):
     bag.add(4)
     bag.add(5)
     assert bag.count(4) == 2
-    assert bag.count(5) == 1
     assert bag.count(6) == 0
+    assert bag.count(5) == 1
+    
 
 
 def test_len_returns_total_number_of_items(bag: Bag[int]):
