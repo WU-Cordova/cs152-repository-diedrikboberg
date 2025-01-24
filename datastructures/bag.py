@@ -35,13 +35,27 @@ class Bag(IBag[T]):
             return 0
 
     def __len__(self) -> int:
-        raise NotImplementedError("__len__ method not implemented")
+        all_items_in_dict = 0
+
+        for items in self.bag_list:
+            all_items_in_dict += self.bag_dict[items]
+
+        return all_items_in_dict
 
     def distinct_items(self) -> int:
-        raise NotImplementedError("distinct_items method not implemented")
+        diff_items = len(self.bag_list)
+
+        return set(self.bag_list)
 
     def __contains__(self, item) -> bool:
-        raise NotImplementedError("__contains__ method not implemented")
+        if item in self.bag_list:
+            return True
+        
+        else:
+            return False
 
     def clear(self) -> None:
-        raise NotImplementedError("clear method not implemented")
+
+        self.bag_list.clear()
+        
+        self.bag_dict.clear()
