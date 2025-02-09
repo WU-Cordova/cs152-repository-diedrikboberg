@@ -7,6 +7,9 @@ class Bag(IBag[T]):
         self.bag_list = []
         self.bag_dict = {}
 
+        for item in items:
+            self.add(item)
+
     def add(self, item: T) -> None:
         if item is not None:
             if item in self.bag_list:
@@ -46,6 +49,7 @@ class Bag(IBag[T]):
         diff_items = len(self.bag_list)
 
         return set(self.bag_list)
+        #return diff_items
 
     def __contains__(self, item) -> bool:
         if item in self.bag_list:
@@ -59,3 +63,18 @@ class Bag(IBag[T]):
         self.bag_list.clear()
         
         self.bag_dict.clear()
+    
+    # I know this is going to have a big impact on the big O notation, since I generate a long list every time I call this method
+
+    def generate_all(self):
+        all = []
+        for key in self.bag_dict:
+            for item in range(self.bag_dict[key]):
+                all.append(key)
+        
+        return all
+"""
+    def take(self, number):
+        radnom.sample()
+        self.remove
+"""

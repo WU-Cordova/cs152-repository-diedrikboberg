@@ -1,5 +1,5 @@
 
-
+"""
 def main():
     
     print("Hello, World!")
@@ -12,3 +12,14 @@ def main():
 
 if __name__ == '__main__':
     main()
+"""
+
+data = [1,2,3]
+data.append("2"*2)
+#for index in range(len(data)):
+#    data[index] = -99
+"""
+for item in data:
+    item = 99
+"""
+print(data)
