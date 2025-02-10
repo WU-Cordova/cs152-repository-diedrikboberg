@@ -1,10 +1,6 @@
 DEBUG = False
 DEBUG1 = True
-DEBUG2 = False
-DEBUG3 = False
-DEBUG4 = False
-DEBUG5= False
-DEBUG6 = False
+
 
 
 import sys
@@ -44,12 +40,12 @@ def main():
 
     ######################################################
     DEBUG1 and print(f"{deck_count} decks have {len(multi_deck_list)} cards")
-    DEBUG1 and print("".join(str(card) for card in multi_deck_list))
+    DEBUG and print("".join(str(card) for card in multi_deck_list))
     ######################################################
 
 
 
-    deck_bag = Bag(*multi_deck_list)
+    deck_bag = Bag(*multi_deck_list) #unpack list and plug them in individually
     dealer_bag = []
     player_bag = []
 
@@ -95,22 +91,46 @@ def main():
     print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {sum(card.face.face_value() for card in player_bag)}")
     print(f"Dealer's Hand: {"".join(str(card) for card in dealer_bag)} with a face value of: {sum(card.face.face_value() for card in dealer_bag)}")
     print(" ")
+
+    restart = False
+
     while True:
+
+        if restart:
+            initialize_game()
+
+
         print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {sum(card.face.face_value() for card in player_bag)}")
         answer = input("Would you like to (H)it or (S)tay?")
 
         if answer == "H":
             one_card = random.sample(list(deck_bag.generate_all()), 1)
-            deck_bag.take(item)
-            player_bag.append(item)
+            for item in one_card:
+                deck_bag.take(item)
+                DEBUG1 and print(len(deck_bag.generate_all())," after taking cards.")
+                player_bag.append(item)
             print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {sum(card.face.face_value() for card in player_bag)}")
-        
+
+            if sum(card.face.face_value() for card in player_bag) > 21:
+                print("Dealer won!")
+
         elif answer == "S":
             while sum(card.face.face_value() for card in dealer_bag) < 17:
                 one_card = random.sample(list(deck_bag.generate_all()), 1)
-                deck_bag.take(item)
-                dealer_bag.append(item)
-                print(f"Dealer's Hand: {"".join(str(card) for card in dealer_bag)} with a face value of: {sum(card.face.face_value() for card in dealer_bag)}")
+                for item in one_card:
+                    deck_bag.take(item)
+                    DEBUG1 and print(len(deck_bag.generate_all())," after taking cards.")
+                    dealer_bag.append(item)
+                print(f"Dealer's Hand: {"".join(str(card) for card in dealer_bag)} with a face value of: {sum(card.face.face_value() for card in dealer_bag)}\n")
+            if sum(card.face.face_value() for card in dealer_bag) > 21:
+                print("Player won!")
+            
+            elif sum(card.face.face_value() for card in dealer_bag) == 21:
+                pass
+
+        elif answer == "R":
+            restart = True
+            
         else:
             return False
 
