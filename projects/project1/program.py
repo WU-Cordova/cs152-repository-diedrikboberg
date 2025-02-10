@@ -55,19 +55,19 @@ def main():
     DEBUG and print(deck_bag.distinct_items())
     DEBUG and print(len(deck_bag.distinct_items()))
     DEBUG and print("------------2")
-    DEBUG and print(deck_bag.generate_all())
-    DEBUG1 and print(len(deck_bag.generate_all()))
+    DEBUG and print(deck_bag.get_full_bag())
+    DEBUG1 and print(len(deck_bag.get_full_bag()))
     DEBUG and print("------------3")
     ######################################################
 
     def get_card():
-        new_card = random.sample(list(deck_bag.generate_all()), 1)
+        new_card = random.sample(list(deck_bag.get_full_bag()), 1)
         print(type(new_card))
         deck_bag.take(new_card)
         return new_card
             
     
-    two_cards = random.sample(list(deck_bag.generate_all()), 2)
+    two_cards = random.sample(list(deck_bag.get_full_bag()), 2)
     DEBUG and print(type(two_cards))
     for item in two_cards:
         DEBUG and print("before taking:", deck_bag.count(item))
@@ -75,7 +75,7 @@ def main():
         DEBUG and print("after taking:", deck_bag.count(item))
         player_bag.append(item)
     
-    one_card = random.sample(list(deck_bag.generate_all()), 1)
+    one_card = random.sample(list(deck_bag.get_full_bag()), 1)
     for item in one_card:
         DEBUG and print("before taking:", deck_bag.count(item))
         deck_bag.take(item)
@@ -85,7 +85,7 @@ def main():
     DEBUG and print(type(player_bag))
     DEBUG and print(type(dealer_bag))
 
-    DEBUG1 and print(len(deck_bag.generate_all())," after taking cards.")
+    DEBUG1 and print(len(deck_bag.get_full_bag())," after taking cards.")
     deck_bag.dictionary
     print("Initial deal:")
     print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {sum(card.face.face_value() for card in player_bag)}")
@@ -93,8 +93,8 @@ def main():
     print(" ")
 
     restart = False
-
-    while True:
+    continue_game = True
+    while continue_game:
 
         if restart:
             initialize_game()
@@ -104,26 +104,32 @@ def main():
         answer = input("Would you like to (H)it or (S)tay?")
 
         if answer == "H":
-            one_card = random.sample(list(deck_bag.generate_all()), 1)
+            one_card = random.sample(list(deck_bag.get_full_bag()), 1)
             for item in one_card:
                 deck_bag.take(item)
-                DEBUG1 and print(len(deck_bag.generate_all())," after taking cards.")
+                DEBUG1 and print(len(deck_bag.get_full_bag())," after taking cards.")
                 player_bag.append(item)
             print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {sum(card.face.face_value() for card in player_bag)}")
 
             if sum(card.face.face_value() for card in player_bag) > 21:
                 print("Dealer won!")
+                continue_game = False
+            
+            elif sum(card.face.face_value() for card in player_bag) == 21:
+                print("Player won!")
+                continue_game = False
 
         elif answer == "S":
             while sum(card.face.face_value() for card in dealer_bag) < 17:
-                one_card = random.sample(list(deck_bag.generate_all()), 1)
+                one_card = random.sample(list(deck_bag.get_full_bag()), 1)
                 for item in one_card:
                     deck_bag.take(item)
-                    DEBUG1 and print(len(deck_bag.generate_all())," after taking cards.")
+                    DEBUG1 and print(len(deck_bag.get_full_bag())," after taking cards.")
                     dealer_bag.append(item)
                 print(f"Dealer's Hand: {"".join(str(card) for card in dealer_bag)} with a face value of: {sum(card.face.face_value() for card in dealer_bag)}\n")
             if sum(card.face.face_value() for card in dealer_bag) > 21:
                 print("Player won!")
+                continue_game = False
             
             elif sum(card.face.face_value() for card in dealer_bag) == 21:
                 pass

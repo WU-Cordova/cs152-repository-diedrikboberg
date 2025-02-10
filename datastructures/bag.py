@@ -104,7 +104,7 @@ class Bag(IBag[T]):
     
     # I know this is going to have a big impact on the big O notation, since I generate a long list every time I call this method
 
-    def generate_all(self):
+    def get_full_bag(self):
         """
         all = []
         for key in self.bag_dict:
@@ -118,4 +118,4 @@ class Bag(IBag[T]):
     def take(self, item):
         #self.generate_all().remove(item)
         self.remove(item)
-        return self.generate_all
+        return self.get_full_bag()
