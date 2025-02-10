@@ -9,6 +9,10 @@ class Bag(IBag[T]):
 
         for item in items:
             self.add(item)
+    
+    def dictionary(self):
+        for items in self.bag_dict:
+            print("keys:",self.bag_dict.keys(),"Value:", self.bag_dict[items])
 
     def add(self, item: T) -> None:
         if item is not None:
@@ -73,8 +77,8 @@ class Bag(IBag[T]):
                 all.append(key)
         
         return all
-"""
-    def take(self, number):
-        radnom.sample()
-        self.remove
-"""
+
+    def take(self, item):
+        self.generate_all().pop(self.generate_all().index(item))
+        self.remove(item)
+        return self.generate_all
