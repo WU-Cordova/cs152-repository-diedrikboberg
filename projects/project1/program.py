@@ -141,76 +141,18 @@ def main():
         answer = input("Would you like to (H)it or (S)tay?")
         still_on = True
 
-        if answer == "H":
-            one_card = random.sample(list(deck_bag.get_full_bag()), 1)
-            for item in one_card:
-                deck_bag.take(item)
-                DEBUG and print(len(deck_bag.get_full_bag())," after taking cards.")
-                player_bag.append(item)
-            print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {value_player_hand()}")
-        
-            if value_player_hand() > 21:
-
-                print("Dealer won!")
-                
-                rematch = input("Play again? (Y)es or (N)o.")
-
-                if rematch == "Y":
-                    pass
-
-                elif rematch == "N":
-                    continue_game = False
+        while still_on:
             
-            elif value_player_hand() == 21:
-                dealer_picks()
-                if value_dealer_hand() == 21:
-                    print("It's a tie.")
-
-                    rematch = input("Play again? (Y)es or (N)o.")
-
-                    if rematch == "Y":
-                        pass
-
-                    elif rematch == "N":
-                        continue_game = False
+            if answer == "H":
+                one_card = random.sample(list(deck_bag.get_full_bag()), 1)
+                for item in one_card:
+                    deck_bag.take(item)
+                    DEBUG and print(len(deck_bag.get_full_bag())," after taking cards.")
+                    player_bag.append(item)
+                print(f"Player's Hand: {"".join(str(card) for card in player_bag)} with a face value of: {value_player_hand()}")
             
-                else:   
-                    print("Player won!")
-                
-                    rematch = input("Play again? (Y)es or (N)o.")
+                if value_player_hand() > 21:
 
-                    if rematch == "Y":
-                        pass
-
-                    elif rematch == "N":
-                        continue_game = False
-            
-            elif value_player_hand() < 21:
-                dealer_picks()
-                if value_dealer_hand() > 21:
-                    print("Player won!")
-                    
-                    rematch = input("Play again? (Y)es or (N)o.")
-
-                    if rematch == "Y":
-                        pass
-
-                    elif rematch == "N":
-                        continue_game = False
-                
-
-                elif 21 - value_player_hand()  < 21 - value_dealer_hand():
-                    print("Player won!")
-                    
-                    rematch = input("Play again? (Y)es or (N)o.")
-
-                    if rematch == "Y":
-                        pass
-
-                    elif rematch == "N":
-                        continue_game = False
-
-                elif 21 - value_player_hand()  > 21 - value_dealer_hand():
                     print("Dealer won!")
                     
                     rematch = input("Play again? (Y)es or (N)o.")
@@ -221,10 +163,38 @@ def main():
                     elif rematch == "N":
                         continue_game = False
                 
+                elif value_player_hand() == 21:
+                    dealer_picks()
+                    if value_dealer_hand() == 21:
+                        print("It's a tie.")
+
+                        rematch = input("Play again? (Y)es or (N)o.")
+
+                        if rematch == "Y":
+                            pass
+
+                        elif rematch == "N":
+                            continue_game = False
+                
+                    else:   
+                        print("Player won!")
+                    
+                        rematch = input("Play again? (Y)es or (N)o.")
+
+                        if rematch == "Y":
+                            continue
+
+                        elif rematch == "N":
+                            continue_game = False
+                
+                else:
+                    answer = input("Would you like to (H)it or (S)tay?")
+                    
+                
             
 
 
-        elif answer == "S":
+        if answer == "S":
             
             dealer_picks()
 
@@ -234,7 +204,7 @@ def main():
                 rematch = input("Play again? (Y)es or (N)o.")
 
                 if rematch == "Y":
-                    pass
+                    continue
 
                 elif rematch == "N":
                     continue_game = False
@@ -246,7 +216,7 @@ def main():
                     rematch = input("Play again? (Y)es or (N)o.")
 
                     if rematch == "Y":
-                        pass
+                        continue
 
                     elif rematch == "N":
                         continue_game = False
@@ -259,7 +229,7 @@ def main():
                     rematch = input("Play again? (Y)es or (N)o.")
 
                     if rematch == "Y":
-                        pass
+                        continue
 
                     elif rematch == "N":
                         continue_game = False
@@ -270,7 +240,7 @@ def main():
                     rematch = input("Play again? (Y)es or (N)o.")
 
                     if rematch == "Y":
-                        pass
+                        continue
 
                     elif rematch == "N":
                         continue_game = False
