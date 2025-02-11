@@ -44,3 +44,5 @@ class Card:
     def __str__(self) -> str:
         return f"[{self.face.value}{self.suit.value}]"
     
+    def card_face(self):
+        return self.face

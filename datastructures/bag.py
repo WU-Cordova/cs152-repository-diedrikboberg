@@ -17,9 +17,9 @@ class Bag(IBag[T]):
 
     def add(self, item: T) -> None:
         if item is not None:
-            print("adding",item)
+            #print("adding",item)
             self.bag_tot.append(item)
-            print(len(self.bag_tot))
+            #print(len(self.bag_tot))
             if item in self.bag_list:
                 self.bag_dict[item] += 1
 
@@ -28,7 +28,7 @@ class Bag(IBag[T]):
                 self.bag_dict[item] = 1
 
 
-            print("Added item.\n")
+            #print("Added item.\n")
         else:
             raise TypeError("Wrong Value")
 
@@ -52,7 +52,7 @@ class Bag(IBag[T]):
         #print(self.bag_tot)  # Debugging - ensure this is necessary
 
         if item in self.bag_tot:
-            print("1 card removed...")
+            #print("1 card removed...")
             self.bag_tot.remove(item)
 
             if item in self.bag_dict:  # Ensure item exists in bag_dict before accessing
