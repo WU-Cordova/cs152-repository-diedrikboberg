@@ -1,0 +1,8 @@
+__getitem__
+    @overload
+    def __getitem__(self, index: int) -> T: ...
+    @overload
+    def __getitem__(self, index: slice) -> Sequence[T]: ...
+    def __getitem__(self, index: int | slice) -> T | Sequence[T]:
+    	pass
+
