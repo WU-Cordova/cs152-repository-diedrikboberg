@@ -22,17 +22,18 @@ print(type(data))
 
 for item in data:
     item = 99
-
-data = Array("hello")
+"""
+data = Array("hello", str(0))
 liste = [num for num in range(10)]
 
 
 print(data)
 #print(data[0])
-print(type(data[0]))
+
+
 
 """
-
 data = ["hello", "danke", "hallo"]
 data.pop("hello")
 print(data)
+"""
