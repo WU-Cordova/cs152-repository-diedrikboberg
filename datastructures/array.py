@@ -19,6 +19,12 @@ from datastructures.iarray import IArray, T
 class Array(IArray[T]):  
 
     def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None: 
+        if type(starting_sequence) != Sequence:
+            raise ValueError("Entered sequence is not a sequence.")
+        
+        #if type()
+
+        
         self.my_array = np.array(starting_sequence)
 
         self.my_logivcal_s = len(self.my_array)
@@ -62,21 +68,34 @@ class Array(IArray[T]):
             array_w_items = self.my_array[:self.my_logivcal_s]
 
             return array_w_items.tolist()[start:stop:step]
+        
+        else:
+            raise TypeError("Index is not an integer.")
 
             
 
         
-        raise NotImplementedError('Indexing not implemented.')
+        #raise NotImplementedError('Indexing not implemented.')
     
     def __setitem__(self, index: int, item: T) -> None:
-        raise NotImplementedError('Indexing not implemented.')
-    
-        start, stop = index.start, index.stop
+        if type(index) != int:
+            raise TypeError("Index is not an integer.")
 
+        if index <= self.my_logivcal_s - 1:
+            if type(item) != self.d_type:
+                raise TypeError("Wrong type.")
+            
+            self.my_array[index] = item
+
+        #raise NotImplementedError('Indexing not implemented.')
+        """
+        start, stop = index.start, index.stop
+        
         if start >= self.__logical_size or stop > self.__logical_size or ...:
             raise IndexError("Out of bounds.")
         
         items_to_return = self.__elements[idex]
+        """
 
     def append(self, data: T) -> None:
         if type(data) != self.d_type:
@@ -138,13 +157,26 @@ class Array(IArray[T]):
         return self.my_array[self.my_logivcal_s - 1::-1].flat
 
     def __delitem__(self, index: int) -> None:
-        raise NotImplementedError('Delete not implemented.')
+        if type(index) != int:
+            raise TypeError("Index is not an integer.")
+        
+        for i in range(index, self.my_logivcal_s-1):
+            self.my_array[i] = self.my_array[i+1]
+
+        #raise NotImplementedError('Delete not implemented.')
 
     def __contains__(self, item: Any) -> bool:
+        
+        if item in self.my_array:
+            return True
+        else:
+            return False
         raise NotImplementedError('Contains not implemented.')
 
     def clear(self) -> None:
-        raise NotImplementedError('Clear not implemented.')
+        self.my_array = np.array([])
+        self.my_logivcal_s = 0
+        #raise NotImplementedError('Clear not implemented.')
 
     def __str__(self) -> str:
         return '[' + ', '.join(str(item) for item in self) + ']'
