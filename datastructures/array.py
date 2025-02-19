@@ -18,7 +18,10 @@ from datastructures.iarray import IArray, T
 
 class Array(IArray[T]):  
 
-    def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None: 
+    def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None:
+        if type(T) != type(data_type):
+            raise TypeError("Your data types are not the same.")
+
         if type(starting_sequence) != Sequence:
             raise ValueError("Entered sequence is not a sequence.")
         
@@ -45,13 +48,13 @@ class Array(IArray[T]):
     @overload
     def __getitem__(self, index: slice) -> Sequence[T]: ...
     def __getitem__(self, index: int | slice) -> T | Sequence[T]:
-        if type(index) == int:
+        if isinstance(index, int):
             if index >= self.my_logivcal_s or index < -self.my_logivcal_s:
                 raise IndexError("Sth wrong eith the index.")
             
             return self.my_array[index]
         
-        elif type(index) == slice:
+        elif isinstance(index, slice):
 
             start, stop, step = index.start, index.stop, index.step
 
@@ -69,7 +72,7 @@ class Array(IArray[T]):
 
             return array_w_items.tolist()[start:stop:step]
         
-        else:
+        elif type(index) != slice or type(index) != int:
             raise TypeError("Index is not an integer.")
 
             
