@@ -20,11 +20,14 @@ from datastructures.iarray import IArray, T
 class Array(IArray[T]):  
 
     def __init__(self, starting_sequence: Sequence[T]=[], data_type: type=object) -> None:
-        if type(T) != type(data_type):
-            raise TypeError("Your data types are not the same.")
-
-        if type(starting_sequence) != Sequence:
+        
+        if not isinstance(starting_sequence, Sequence):
             raise ValueError("Entered sequence is not a sequence.")
+        
+        for element in starting_sequence:
+            if not isinstance(element, data_type):
+                raise TypeError("Your data types are not the same.")
+
         
         #if type()
 
@@ -121,7 +124,26 @@ class Array(IArray[T]):
         self.my_logivcal_s += 1
 
     def append_front(self, data: T) -> None:
-        raise NotImplementedError('Append front not implemented.')
+        if type(data) != self.d_type:
+            raise TypeError("Wrong type.")
+
+        #resizing array
+        if self.my_logivcal_s == self.my_physical_s:
+            self.my_physical_s *= 2
+
+            new_array = np.empty(self.my_physical_s)
+
+            for i in range(self.my_logivcal_s):
+                new_array[i] = self.my_array[i]
+                    
+            self.my_array = new_array
+        
+        for i in range(self.my_logivcal_s,1,-1):
+            self.my_array[i] = self.my_array[i-1]
+        
+        self.my_array[0] = data
+        
+        #raise NotImplementedError('Append front not implemented.')
 
     def pop(self) -> None:
         if self.my_logivcal_s >= 1:
@@ -140,7 +162,9 @@ class Array(IArray[T]):
         raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
-        raise NotImplementedError('Pop front not implemented.')
+        del self[0]
+
+        #raise NotImplementedError('Pop front not implemented.')
 
     def __len__(self) -> int: 
         return self.my_logivcal_s
@@ -164,6 +188,16 @@ class Array(IArray[T]):
         if type(index) != int:
             raise TypeError("Index is not an integer.")
         
+        if self.my_logivcal_s < 1/4 * self.my_physical_s:
+            self.my_physical_s /= 2
+
+            new_array = np.empty(self.my_physical_s)
+
+            for i in range(self.my_logivcal_s):
+                new_array[i] = self.my_array[i]
+                
+            self.my_array = new_array
+
         for i in range(index, self.my_logivcal_s-1):
             self.my_array[i] = self.my_array[i+1]
 
