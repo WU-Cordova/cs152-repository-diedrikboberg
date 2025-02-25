@@ -54,3 +54,18 @@ Use lists when you need a general-purpose, flexible collection of items.
 Use array.array when you need a lightweight, type-restricted array for small numerical computations.
 Use NumPy arrays for large numerical operations, machine learning, and scientific computing.
 Would you like a more detailed example of performance comparison? 
+
+
+
+yield = returns and saves the state of a variable
+
+
+sequence = []
+
+for row_index in range(rows_len):
+    sequence.append(row_index)
+
+for row_index in range(row_len):
+    for col_index in range(col_len):
+        sequence[row_index].append(col_index)
+
