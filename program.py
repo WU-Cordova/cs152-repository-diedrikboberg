@@ -31,7 +31,7 @@ liste = [num for num in range(10)]
 print(data)
 #print(data[0])
 """
-
+"""
 lister = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
 list1 = []
@@ -41,7 +41,13 @@ for row in lister:
 
 print(list1)
 """
+
+"""
 data = ["hello", "danke", "hallo"]
 data.pop("hello")
 print(data)
 """
+
+
+
+
