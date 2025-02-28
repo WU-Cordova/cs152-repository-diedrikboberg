@@ -227,7 +227,7 @@ def main():
                         elif rematch == "N":
                             continue_game = False
 
-                elif value_player_hand() < 21:
+                elif value_dealer_hand() < 21:
         
                     if 21 - value_player_hand()  > 21 - value_dealer_hand():
                         print("Dealer won!")
@@ -253,21 +253,21 @@ def main():
                         elif rematch == "N":
                             continue_game = False
                     
-                    elif value_dealer_hand == value_player_hand():
-                        print("It's a tie.")
+                elif value_dealer_hand == value_player_hand():
+                    print("It's a tie.")
 
-                        rematch = input("Play again? (Y)es or (N)o.")
+                    rematch = input("Play again? (Y)es or (N)o.")
 
-                        if rematch == "Y":
-                            #continue
-                            still_on = False
+                    if rematch == "Y":
+                        #continue
+                        still_on = False
 
-                        elif rematch == "N":
-                            continue_game = False
+                    elif rematch == "N":
+                        continue_game = False
 
-                    else:
-                        print(value_dealer_hand)
-                        print(value_player_hand)
+                else:
+                    print(value_dealer_hand)
+                    print(value_player_hand)
                         
 
 if __name__ == '__main__':
