@@ -69,3 +69,35 @@ for row_index in range(row_len):
     for col_index in range(col_len):
         sequence[row_index].append(col_index)
 
+
+
+2/28/2005
+
+Stack:
+    def __init__(self, Array):
+        self.Array = Array()
+        self.top_item_index = int
+
+    def push(self, item):
+        self.array.append(item)
+        self.top_item_index += 1
+
+    def top(self):
+        return self.Array[self.top_item_index]
+
+    def size(self):
+        return len(self.Array)
+    
+    def pop(self):
+        self.top()
+        self.Array.remove(self.top_item_index)
+        self.top_item_index -= 1
+
+
+# [1] --> [4] --> [3] --> [7]   Linked List
+# [1,4,3,7]                     List
+
+
+
+
+

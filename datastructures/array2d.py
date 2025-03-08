@@ -52,7 +52,7 @@ class Array2D(IArray2D[T]):
             return self.num_columns
         
         def __str__(self) -> str:
-            return f"[{', '.join([str(self[column_index]) for column_index in range(self.num_columns)])}]"
+            return f"{''.join([str(self[column_index]) for column_index in range(self.num_columns)])}"
         
         def __repr__(self) -> str:
             return f'Row {self.row_index}: [{", ".join([str(self[column_index]) for column_index in range(self.num_columns - 1)])}, {str(self[self.num_columns - 1])}]'
@@ -88,7 +88,11 @@ class Array2D(IArray2D[T]):
                 self.array2D[index] = starting_sequence[row_index][column_index]
                 index += 1
 
-
+    def __eq__(self, other)-> bool:
+        if not isinstance(other, Array2D):
+            return False
+        
+        return self.array2D == other.array2D
 
         #raise NotImplementedError('Array2D.__init__ not implemented.')
 
@@ -127,7 +131,7 @@ class Array2D(IArray2D[T]):
         #raise NotImplementedError('Array2D.__len__ not implemented')
                                   
     def __str__(self) -> str: 
-        return f'[{", ".join(f"{str(row)}" for row in self)}]'
+        return f'{"".join(f"{str(row)}" for row in self)}'
     
     def __repr__(self) -> str: 
         return f'Array2D {self.row_len} Rows x {self.column_len} Columns, items: {str(self)}'
