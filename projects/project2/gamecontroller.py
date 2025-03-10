@@ -6,7 +6,7 @@ from projects.project2.khibit import KBHit
 class Gamecontroller:
     def __init__(self, grid: Grid):
         print("From the constructor.")
-        self.grid = Grid(80,60)
+        self.grid = Grid(40,40)
         self.hist = []
 
     def run(self, n):
