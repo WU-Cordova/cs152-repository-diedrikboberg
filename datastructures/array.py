@@ -39,7 +39,8 @@ class Array(IArray[T]):
         self.my_physical_s = 2**self.my_logivcal_s.bit_length()
 
         self.d_type = data_type
-    
+
+        print(self.d_type)
         #while item in starting_sequence:
             #self.my_array.append(item)
         #self.my_array = np.array()
@@ -89,8 +90,8 @@ class Array(IArray[T]):
             raise TypeError("Index is not an integer.")
 
         if index <= self.my_logivcal_s - 1:
-            if type(item) != self.d_type:
-                raise TypeError("Wrong type.")
+            #if type(item) != self.d_type:
+                #raise TypeError("Wrong type.")
             
             self.my_array[index] = item
 
@@ -222,6 +223,23 @@ class Array(IArray[T]):
     def __repr__(self) -> str:
         return f'Array {self.__str__()}, Logical: {self.my_logivcal_s}, Physical: {self.my_physical_s}, type: {self.d_type}'
     
+
+    def merge(array1, array2):
+        new_Array = Array([0 for i in range(len(array1)+len(array2))])
+        counter1 = 0
+        counter2 = 1
+        
+        print(type(counter1))
+
+        for i in range(len(array1)):
+            new_Array[counter1] = array1[i]
+            counter1 += 2
+
+        for y in range(len(array2)):
+            new_Array[counter2] = array2[y]
+            counter2 += 2
+
+        return new_Array
 
 if __name__ == '__main__':
     filename = os.path.basename(__file__)
