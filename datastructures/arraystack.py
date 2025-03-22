@@ -30,12 +30,16 @@ class ArrayStack(IStack[T]):
         #raise NotImplementedError('ArrayStack is not implemented')
 
     def push(self, item: T) -> None:
-        #raise NotImplementedError
-        self.stack[self.count] = item
+        
+        
         self.count += 1
         self.top_index += 1
         if self.count > self.max_size:
             raise IndexError("Stack is already full")
+        self.stack[self.top_index] = item
+        
+        
+        
 
     def pop(self) -> T:
         #raise NotImplementedError
