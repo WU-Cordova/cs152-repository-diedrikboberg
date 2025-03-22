@@ -1,5 +1,6 @@
 from abc import abstractmethod
 from typing import Generic, TypeVar
+from datastructures.array import Array
 
 T = TypeVar('T')
 
@@ -27,7 +28,11 @@ class IQueue(Generic[T]):
         ...
 
     @abstractmethod
-    def is_empty(self) -> bool:
+    def empty(self) -> bool:
+        ...
+    
+    @abstractmethod
+    def full(self) -> bool:
         ...
 
     @abstractmethod

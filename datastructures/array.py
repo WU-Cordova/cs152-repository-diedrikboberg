@@ -30,6 +30,7 @@ class Array(IArray[T]):
 
         
         #if type()
+        self.data_type = data_type
 
         
         self.my_array = np.array(starting_sequence)
@@ -86,8 +87,11 @@ class Array(IArray[T]):
         #raise NotImplementedError('Indexing not implemented.')
     
     def __setitem__(self, index: int, item: T) -> None:
-        if type(index) != int:
+        if not isinstance(index,int):
             raise TypeError("Index is not an integer.")
+        
+        if not isinstance(item, self.data_type):
+            raise TypeError("Wrong type xyxyxy")
 
         if index <= self.my_logivcal_s - 1:
             #if type(item) != self.d_type:
@@ -160,7 +164,7 @@ class Array(IArray[T]):
                 
                 self.my_array = new_array
 
-        raise NotImplementedError('Pop not implemented.')
+        #raise NotImplementedError('Pop not implemented.')
     
     def pop_front(self) -> None:
         del self[0]
@@ -244,3 +248,27 @@ class Array(IArray[T]):
 if __name__ == '__main__':
     filename = os.path.basename(__file__)
     print(f'This is the {filename} file.\nDid you mean to run your tests or program.py file?\nFor tests, run them from the Test Explorer on the left.')
+
+
+
+
+
+"""
+
+a = self.front_index()
+        b = self.rear_index()
+        c = other.front_index()
+        d = other.rear_index()
+
+        for i in range(a,b):
+            #for y in range(c,d):
+            if self.queue[i] not in other:
+                return False
+
+        print("checked all positions")       
+        if self.front_index == other.front_index and self.rear_index == other.rear_index:
+            return True
+
+
+
+"""
