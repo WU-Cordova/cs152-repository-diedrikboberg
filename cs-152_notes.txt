@@ -1,0 +1,103 @@
+__getitem__
+    @overload
+    def __getitem__(self, index: int) -> T: ...
+    @overload
+    def __getitem__(self, index: slice) -> Sequence[T]: ...
+    def __getitem__(self, index: int | slice) -> T | Sequence[T]:
+    	pass
+
+In Python, both arrays and lists are used to store collections of items, but they have key differences in terms of functionality, performance, and usage.
+
+1. Lists (list)
+Built-in data structure in Python.
+Can hold heterogeneous data types (integers, floats, strings, objects, etc.).
+Supports dynamic sizing (can grow and shrink dynamically).
+Provides many built-in methods for manipulation (append(), pop(), insert(), etc.).
+Slower for numerical operations compared to arrays.
+
+
+Example:
+
+my_list = [1, "hello", 3.5]  # Different data types allowed
+my_list.append(10)  # Add an element
+print(my_list)  # Output: [1, 'hello', 3.5, 10]
+
+2. Arrays (array.array or numpy.array)
+Need to be imported from the array module or NumPy (numpy).
+Can only hold homogeneous data (all elements must be of the same type).
+More memory-efficient than lists for numerical data.
+Faster for mathematical computations (especially NumPy arrays).
+
+Using array module (less common)
+import array
+my_array = array.array('i', [1, 2, 3, 4])  # 'i' stands for integer type
+my_array.append(5)
+print(my_array)  # Output: array('i', [1, 2, 3, 4, 5])
+
+
+Using NumPy arrays (preferred for numerical computing)
+import numpy as np
+my_numpy_array = np.array([1, 2, 3, 4])  # Faster and more powerful
+print(my_numpy_array * 2)  # Output: [2 4 6 8] (element-wise multiplication)
+
+
+Key Differences:
+Feature	                    List (list)	                Array (array.array)	        NumPy Array (numpy.array)
+Data Type	                Heterogeneous	            Homogeneous	                Homogeneous
+Memory Efficiency	        Less efficient	            More efficient	            Highly efficient
+Performance (Math Ops)	    Slower	                    Faster than list	        Fastest
+Built-in Support	        Yes	                        Needs import array	        Needs import numpy
+Best Use Case	            General-purpose storage	    Simple numerical storage	Large-scale numerical computing
+
+When to Use What?
+Use lists when you need a general-purpose, flexible collection of items.
+Use array.array when you need a lightweight, type-restricted array for small numerical computations.
+Use NumPy arrays for large numerical operations, machine learning, and scientific computing.
+Would you like a more detailed example of performance comparison? 
+
+
+
+yield = returns and saves the state of a variable
+
+
+sequence = []
+
+for row_index in range(rows_len):
+    sequence.append(row_index)
+
+for row_index in range(row_len):
+    for col_index in range(col_len):
+        sequence[row_index].append(col_index)
+
+
+
+2/28/2005
+
+Stack:
+    def __init__(self, Array):
+        self.Array = Array()
+        self.top_item_index = int
+
+    def push(self, item):
+        self.array.append(item)
+        self.top_item_index += 1
+
+    def top(self):
+        return self.Array[self.top_item_index]
+
+    def size(self):
+        return len(self.Array)
+    
+    def pop(self):
+        self.top()
+        self.Array.remove(self.top_item_index)
+        self.top_item_index -= 1
+
+
+# [1] --> [4] --> [3] --> [7]   Linked List
+# [1,4,3,7]                     List
+
+
+
+
+
