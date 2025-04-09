@@ -27,6 +27,9 @@ class LinkedList[T](ILinkedList[T]):
         llist: LinkedList[T] = LinkedList(data_type= data_type)
 
         for item in sequence:
+            if not isinstance(item, data_type):
+                raise TypeError(f"{item}, is has the wrong type.")
+            
             llist.append(item)
 
         return llist
@@ -34,7 +37,8 @@ class LinkedList[T](ILinkedList[T]):
 
 
     def append(self, item: T) -> None:
-
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"{item} has the wrong type.")
         node = LinkedList.Node(data = item)
 
         if self.empty:
@@ -54,14 +58,17 @@ class LinkedList[T](ILinkedList[T]):
 
 
     def prepend(self, item: T) -> None:
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"{item} has the wrong type.")
         new_node = LinkedList.Node(data = item)
 
-        new_node.next = self.head
-
-        if self.head:
+        if self.empty:
+            self.head = self.tail = new_node
+        
+        else:
+            new_node.next = self.head
             self.head.previous = new_node
-
-        self.head = new_node
+            self.head = new_node 
 
         self.count += 1
 
@@ -69,6 +76,11 @@ class LinkedList[T](ILinkedList[T]):
         # raise value error if the target does not exst
         # raise typeerror if the target is not the right type
         #rase tvpeerror if the item is not the right type
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"{item} has the wrong type.")
+        
+        if not isinstance(target, self.data_type):
+            raise TypeError(f"{target} has the wrong type.")
 
         travel = self.head
 
@@ -85,6 +97,13 @@ class LinkedList[T](ILinkedList[T]):
         if travel is self.head: #about the object not the value
             self.prepend(item)
 
+        else:
+            new_node = LinkedList.Node(data=item)
+            new_node.previous = travel.previous
+            new_node.next = travel
+            travel.previous.next = new_node
+            travel.previous = new_node
+            self.count += 1
         #not the head
 
         # 1. create new node
@@ -104,13 +123,68 @@ class LinkedList[T](ILinkedList[T]):
             
 
     def insert_after(self, target: T, item: T) -> None:
-        raise NotImplementedError("LinkedList.insert_after is not implemented")
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"item: {item} has the wrong type.")
+        
+        if not isinstance(target, self.data_type):
+            raise TypeError(f"target: {target} has the wrong type.")
+        
+        travel = self.head
+        while travel:
+            if travel.data == target:
+                break
+            travel = travel.next
+        if travel is None:
+            raise ValueError(f"Target: {target} is of the wrong value")
+        
+        new_node = LinkedList.Node(data=item)
+
+        new_node.previous = travel
+        new_node.next = travel.next
+        if travel.next:
+            travel.next.previous = new_node
+
+        else:
+            self.tail = new_node
+        travel.next = new_node
+        self.count += 1
+        
 
     def remove(self, item: T) -> None:
-        raise NotImplementedError("LinkedList.remove is not implemented")
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"{item} has the wrong type.")
+        
+        travel = self.head
+        while travel:
+            if travel.data == item:
+                if travel.previous:
+                    travel.previous.next = travel.next
+                else:
+                    self.head = travel.next
+                if travel.next:
+                    travel.next.previous = travel.previous
+                else:
+                    self.tail = travel.previous
+                self.count -= 1
+                return
+            travel = travel.next
+        raise ValueError(f"item:{item} not found in list")
+    
 
     def remove_all(self, item: T) -> None:
-        raise NotImplementedError("LinkedList.remove_all is not implemented")
+        if not isinstance(item, self.data_type):
+            raise TypeError(f"{item} has the wrong type.")
+        
+        travel = self.head
+        while travel:
+            next_node = travel.next
+            if travel.data == item:
+                if travel.previous:
+                    travel.previous.next = travel.next
+                else:
+                    self.head = travel.previous
+                self.count -= 1
+            travel = next_node
 
     def pop(self) -> T:
         if self.tail is None:
@@ -126,7 +200,8 @@ class LinkedList[T](ILinkedList[T]):
         
         elif self.head is self.tail:
             self.head = self.tail = None
-            return data
+
+        return data
 
 
         
@@ -136,15 +211,29 @@ class LinkedList[T](ILinkedList[T]):
 
 
     def pop_front(self) -> T:
-        raise NotImplementedError("LinkedList.pop_front is not implemented")
+        if self.empty:
+            raise IndexError("LL is empty.")
+        data = self.head.data
+        if self.head == self.tail:
+            self.head = self.tail = None
+        else:
+            self.head = self.head.next
+            self.head.previous = None
+        self.count -= 1
+        return data
 
     @property
     def front(self) -> T:
-        raise NotImplementedError("LinkedList.front is not implemented")
+        if self.empty:
+            raise IndexError("LL is empty.")
+        return self.head.data
+    
 
     @property
     def back(self) -> T:
-        ...
+        if self.empty:
+            raise IndexError("LL is empty.")
+        return self.tail.data
 
     @property
     def empty(self) -> bool:
@@ -154,10 +243,16 @@ class LinkedList[T](ILinkedList[T]):
         return self.count
 
     def clear(self) -> None:
-        raise NotImplementedError("LinkedList.clear is not implemented")
+        self.head = self.tail = None
+        self.count = 0
 
     def __contains__(self, item: T) -> bool:
-        raise NotImplementedError("LinkedList.__contains__ is not implemented")
+        travel = self.head
+        while travel:
+            if travel.data == item:
+                return True
+            travel = travel.next
+        return False
 
     def __iter__(self) -> Iterator[T]: # returns an iterator
         self._travel_node = self.head
@@ -173,10 +268,24 @@ class LinkedList[T](ILinkedList[T]):
         return data
     
     def __reversed__(self) -> ILinkedList[T]:
-        raise NotImplementedError("LinkedList.__reversed__ is not implemented")
+        self.travel_node = self.tail
+        while self.travel_node:
+            yield self.travel_node.data
+            self.travel_node = self.travel_node.previous
     
     def __eq__(self, other: object) -> bool:
-        raise NotImplementedError("LinkedList.__eq__ is not implemented")
+        if not isinstance(other, LinkedList):
+            return False
+        if self.count != other.count:
+            return False
+        current_self = self.head
+        current_other = other.head
+        while current_self and current_other:
+            if current_other.data != current_other.data:
+                return False
+            current_other = current_other.next
+            current_self = current_self.next
+        return True
 
     def __str__(self) -> str:
         items = []
