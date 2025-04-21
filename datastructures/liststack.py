@@ -2,9 +2,9 @@ import os
 from datastructures.istack import IStack
 from typing import Generic
 
-from datastructures.linkedlist import LinkedList
+from datastructures.linkedlist import LinkedList, T
 
-class ListStack[T](Generic[T], IStack[T]):
+class ListStack(IStack[T]):
     """
     ListStack (LinkedList-based Stack)
 
@@ -87,7 +87,7 @@ class ListStack[T](Generic[T], IStack[T]):
             bool: True if the item exists in the stack, False otherwise.
 
         """
-        if not isinstance(item, self.data_type):
+        if not isinstance(item, self.data):
             raise TypeError(f"item: {item} has the wrong type.")
         
         else:
@@ -105,7 +105,7 @@ class ListStack[T](Generic[T], IStack[T]):
             bool: True if the stacks are equal, False otherwise.
 
         """
-        return self.items == other
+        return self.items == other.items
 
     def __len__(self) -> int:
         """
