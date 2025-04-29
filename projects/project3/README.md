@@ -1,0 +1,1 @@
+My open_order queue is not displaying my orders nicely. My string function in array.py doesn't allow me to just print the ordered items.

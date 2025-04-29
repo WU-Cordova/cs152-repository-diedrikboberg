@@ -96,7 +96,7 @@ class CircularQueue(IQueue[T]):
         '''
 
         removed_item = self.queue[self._front]
-        self.queue[self._front] = 0
+        self.queue[self._front] = object
         if self._front == self._maxsize:
             self._front = 0
         self._front += 1

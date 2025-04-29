@@ -14,7 +14,7 @@ from numpy.typing import NDArray
 
 
 #uneccesdf
-from datastructures.iarray import IArray, T
+from iarray import IArray, T
 
 
 class Array(IArray[T]):  
@@ -31,13 +31,12 @@ class Array(IArray[T]):
         
         #if type()
         self.data_type = data_type
-
         
         self.my_array = np.array(starting_sequence)
-
+    
         self.my_logivcal_s = len(self.my_array)
 
-        self.my_physical_s = self.my_logivcal_s
+        self.my_physical_s = 2**self.my_logivcal_s
 
         self.d_type = data_type
 
@@ -110,12 +109,11 @@ class Array(IArray[T]):
         """
 
     def append(self, data: T) -> None:
-        if not isinstance(data, self.d_type):
+        if not isinstance(data, self.data_type):
             raise TypeError("Wrong type.")
 
         if self.my_logivcal_s == self.my_physical_s:
-            self.my_physical_s *= 2 
-            self.my_physical_s += 1
+            self.my_physical_s *= 2
 
             new_array = np.empty(self.my_physical_s)
 
@@ -125,12 +123,12 @@ class Array(IArray[T]):
             self.my_array = new_array
         
 
-        self.my_array[self.my_logivcal_s] = data
+        self.my_array[self.my_logivcal_s - 1] = data
 
         self.my_logivcal_s += 1
 
     def append_front(self, data: T) -> None:
-        if not isinstance(data,self.d_type):
+        if type(data) != self.d_type:
             raise TypeError("Wrong type.")
 
         #resizing array
@@ -223,12 +221,7 @@ class Array(IArray[T]):
         #raise NotImplementedError('Clear not implemented.')
 
     def __str__(self) -> str:
-        everything_in_queue = ""
-        for i in range(len(self)):
-            everything_in_queue += str(self[i]) + ","
-
-        #return '[' + ', '.join(str(item) for item in self) + ']'
-        return everything_in_queue
+        return '[' + ', '.join(str(item) for item in self) + ']'
     
     def __repr__(self) -> str:
         return f'Array {self.__str__()}, Logical: {self.my_logivcal_s}, Physical: {self.my_physical_s}, type: {self.d_type}'

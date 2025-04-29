@@ -119,3 +119,10 @@ class Bag(IBag[T]):
         #self.generate_all().remove(item)
         self.remove(item)
         return self.get_full_bag()
+    
+    def __str__(self) -> str:
+        bag_str = ""
+        for item in self.bag_list:
+            bag_str += f"{item}: {self.bag_dict[item]}\n"
+            
+        return bag_str
