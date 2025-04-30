@@ -1,1 +1,4 @@
-My open_order queue is not displaying my orders nicely. My string function in array.py doesn't allow me to just print the ordered items.
+
+- I tried to implement my order as an array at first, but then I gave up, because that list also has to able to grow dynamically. I don't want to restrict my customers from ordering more. 
+
+- My open_order queue wasn't displaying my orders nicely, because my string function in array.py is not optimzed to just print the important items. I also changed my open order queue to a list because it has to be able to grow dynamically. But I implemented a function (append_to_front) that takes in an item and a list and appends the item at the front and returns a new list. Then when I remove an order I just pop the last item/person of that list. 

@@ -9,6 +9,7 @@ bistro_menu = Array2D([["Mocha Latte", 3.49, "S"],["Cappuchino", 2.99, "S" ],["F
 order = []
 open_orders = []
 hidden_orders = []
+ready_for_report = []
 end_of_day_report = Bag()
 
 def add_to_front(item, ordered_list):
@@ -19,12 +20,14 @@ def add_to_front(item, ordered_list):
 
     return new_list
 
-
 def display_menu():
     for i in range(len(bistro_menu)):
         print(f"{i+1}. {bistro_menu[i][0]}: ${bistro_menu[i][1]}")
 
     print("------------------------")
+
+def get_last_list(day_report):
+    return day_report[-1]
 
 print("welcome to the Bearcat Bistro!")
 print("-------------------------------")
@@ -48,11 +51,16 @@ while True:
         sum = 0
 
         order_amount = int(input("Please enter the amount of the drinks you would like to order: "))
+
         for i in range(order_amount):
             drink = int(input(f"Drink #{i+1}: ")) - 1
-            order.append(bistro_menu[drink])
 
-        
+            new_order = []
+            for i in range(3):
+                new_order.append(bistro_menu[drink][i])
+            order.append(new_order)
+            #new_order.clear()
+
         name = input("Please enter your name: ")
         name += ": "
 
@@ -62,14 +70,20 @@ while True:
             sum += order[i][1]
             print(f"\n{order[i][0]} {order[i][2]}: ${order[i][1]}")
         
-        for i in range(len(order)):
-            hidden_orders.append(order[i])
-
+        #for i in range(len(order)):
+            #hidden_orders.append(order[i])
+        for item in order:
+            hidden_orders = add_to_front(item, hidden_orders)
+        
+        
+        ready_for_report = add_to_front(hidden_orders, ready_for_report)
+        #hidden_orders.append(order)
         order.clear()
+        hidden_orders.pop()
         open_orders = add_to_front(name, open_orders)
         
         print("------------------------")
-        print(f"Total: {sum}\n")
+        print(f"Total: {round(sum,2)}\n")
         
         
     # View open orders
@@ -78,23 +92,26 @@ while True:
         for order4 in open_orders[::-1]:
             print(order4)
         
-        print(hidden_orders)
-        
-
-        
+        #print(hidden_orders)
+        print(ready_for_report)
+             
         
     elif choice == "4":
         #to_end_of_day = hidden_orders[::1]
         #end_of_day_report.add(to_end_of_day)
         open_orders.pop()
 
+        to_get_reported = get_last_list(ready_for_report)
         print("Hidden Orders:")
-        for order in hidden_orders:
-            text_order = f"{order[0]} [{order[2]}]"
+        for order2 in to_get_reported:
+            text_order = f"{order2[0]} [{order2[2]}]"
             #print(order[0], order[2])
             #hidden_orders.remove(order)
             end_of_day_report.add(text_order)
-        print(hidden_orders)
+
+        ready_for_report.pop()
+
+        print(ready_for_report)
         
 
     elif choice == "5":
