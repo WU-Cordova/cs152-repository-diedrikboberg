@@ -2,10 +2,11 @@ from datastructures.array import Array
 from datastructures.array2d import Array2D
 from datastructures.bag import Bag
 from datastructures.circularqueue import CircularQueue
+import time
 
 
 menu_list = Array(["Display Menu", "Take New Order", "View Open Orders", "Mark Next Order as Complete", "view End-Of-Day report", "Exit"], str)
-bistro_menu = Array2D([["Mocha Latte", 3.49, "S"],["Cappuchino", 2.99, "S" ],["Frappuchina", 4.99, "S"],["Latte", 2.15, "S"],["Vanilla Milkshake",5.99, "S"]])
+bistro_menu = Array2D([["Prepper", 3.49, "S"],["Chill Bearcat", 2.99, "S" ],["Mr.Studious", 4.99, "S"],["Blitz's Favorite", 2.15, "S"],["Vanilla Milkshake",5.99, "S"]])
 order = []
 open_orders = []
 hidden_orders = []
@@ -58,6 +59,19 @@ while True:
             new_order = []
             for i in range(3):
                 new_order.append(bistro_menu[drink][i])
+            
+            size = input("S for small , M for medium (+$0.5), L for large (+$1): ").upper()
+                
+            if size == "S":
+                pass
+            elif size == "M":
+                new_order[1] += 0.50
+                new_order[2] = "M"
+            elif size == "L":
+                new_order[1] += 1.00
+                new_order[2] = "L"
+
+    
             order.append(new_order)
             #new_order.clear()
 
@@ -79,7 +93,7 @@ while True:
         ready_for_report = add_to_front(hidden_orders, ready_for_report)
         #hidden_orders.append(order)
         order.clear()
-        hidden_orders.pop()
+        hidden_orders = []
         open_orders = add_to_front(name, open_orders)
         
         print("------------------------")
@@ -88,21 +102,31 @@ while True:
         
     # View open orders
     elif choice == "3":
+        if len(open_orders) == 0:
+            print("No open orders.")
+            continue
         print("Open Orders:")
         for order4 in open_orders[::-1]:
             print(order4)
         
         #print(hidden_orders)
-        print(ready_for_report)
+        #print("Ready for report:", ready_for_report)
              
         
     elif choice == "4":
         #to_end_of_day = hidden_orders[::1]
         #end_of_day_report.add(to_end_of_day)
+        if len(open_orders) == 0:
+            print("No open orders to mark as complete.")
+            continue
+
+        print("Marking next order as complete...")
+        time.sleep(2)
+        
         open_orders.pop()
 
         to_get_reported = get_last_list(ready_for_report)
-        print("Hidden Orders:")
+        #print("Hidden Orders:")
         for order2 in to_get_reported:
             text_order = f"{order2[0]} [{order2[2]}]"
             #print(order[0], order[2])
@@ -110,14 +134,27 @@ while True:
             end_of_day_report.add(text_order)
 
         ready_for_report.pop()
+        print("Order marked as complete.")
 
-        print(ready_for_report)
+        #print("Ready for report:", ready_for_report)
         
 
     elif choice == "5":
+        if len(end_of_day_report) == 0:
+            print("No orders have been made so far.")
+            continue    
+        print("End of Day Report:")
+        print("------------------------")
         print(end_of_day_report)
         
     elif choice == "6":
+
+        print("Exiting the Bearcat Bistro...")
+        time.sleep(2)
+        print("")
         print("Thank you for visiting the Bearcat Bistro!")
+        print("")
+        time.sleep(1)
         print("Goodbye!")
+        time.sleep(5)
         break
