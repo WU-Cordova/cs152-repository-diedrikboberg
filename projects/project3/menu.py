@@ -83,23 +83,32 @@ while True:
             name += f"{order[i][0]} [{order[i][2]}] "
             sum += order[i][1]
             print(f"\n{order[i][0]} {order[i][2]}: ${order[i][1]}")
+
+            print("------------------------")
+            print(f"Total: {round(sum,2)}\n")
         
+        yes_no = input("Is this order correct? (Y/N): ").upper()
+        if yes_no == "N":
+            print("Order cancelled.")
+            order.clear()
+            
+            continue
+
+        else:
         #for i in range(len(order)):
             #hidden_orders.append(order[i])
-        for item in order:
-            hidden_orders = add_to_front(item, hidden_orders)
+            for item in order:
+                hidden_orders = add_to_front(item, hidden_orders)
         
         
-        ready_for_report = add_to_front(hidden_orders, ready_for_report)
-        #hidden_orders.append(order)
-        order.clear()
-        hidden_orders = []
-        open_orders = add_to_front(name, open_orders)
+            ready_for_report = add_to_front(hidden_orders, ready_for_report)
+            #hidden_orders.append(order)
+            order.clear()
+            hidden_orders = []
+            open_orders = add_to_front(name, open_orders)
+            
         
-        print("------------------------")
-        print(f"Total: {round(sum,2)}\n")
-        
-        
+
     # View open orders
     elif choice == "3":
         if len(open_orders) == 0:
@@ -112,7 +121,7 @@ while True:
         #print(hidden_orders)
         #print("Ready for report:", ready_for_report)
              
-        
+    # Mark next order as complete
     elif choice == "4":
         #to_end_of_day = hidden_orders[::1]
         #end_of_day_report.add(to_end_of_day)
@@ -138,7 +147,7 @@ while True:
 
         #print("Ready for report:", ready_for_report)
         
-
+    # View end-of-day report
     elif choice == "5":
         if len(end_of_day_report) == 0:
             print("No orders have been made so far.")
@@ -147,6 +156,7 @@ while True:
         print("------------------------")
         print(end_of_day_report)
         
+    # Exit
     elif choice == "6":
 
         print("Exiting the Bearcat Bistro...")

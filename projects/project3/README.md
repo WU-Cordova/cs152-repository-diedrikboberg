@@ -20,4 +20,6 @@
 - My end_of_day report is a Bag. I chose this data structure because it stores every item indivudally and keeps the different items separated and adds 1 to the counter when the Item is alerady in there. Then when I print out the bag, it just returns all unique drinks (it seperates them from sizes as well). The bag doesn't return 0 if one of the drinks hasn't been sold, because that drink has never been in the bag. The bag only returns the items that are or have been in the bag.
 
 
-- I didn't get to use Array based data strucutures because they would restrict the costumers from ordering different amounts of drinks. 
+- I didn't get to use as many Array based data strucutures because they would restrict the costumers from ordering different amounts of drinks. 
+
+- The reason for setting hidden_orders equal to an empty list, is that clear() doesn't work. For some reason ready_for_report gets cleared as well whenever we clear hidden_orders. So professor Cordova and I tried with setting it equal to an empty list, and it started working.  
