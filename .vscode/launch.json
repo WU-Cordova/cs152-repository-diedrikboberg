@@ -20,7 +20,7 @@
             "name": "Project 3",
             "type": "debugpy",
             "request": "launch",
-            "module": "projects.project3.program",
+            "module": "projects.project3.menu",
             "console": "integratedTerminal"
         },
         {
